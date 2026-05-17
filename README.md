@@ -1,6 +1,7 @@
 # Cyber Security Incident Playbook — Full Attack Chain Lab
 
-A full end-to-end attack simulation covering Initial Access through Data Exfiltration, with detection rules built in Wazuh and mapped to the MITRE ATT&CK framework. Independent incident response and detection engineering lab project
+A full end-to-end attack simulation covering Initial Access through Data Exfiltration, with detection rules built in Wazuh and mapped to the MITRE ATT&CK framework. Completed as a polytechnic assignment for the Incident Response and Management module.
+
 ---
 
 ## Attack Chain Overview
