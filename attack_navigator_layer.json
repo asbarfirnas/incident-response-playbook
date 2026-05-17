@@ -1,0 +1,118 @@
+{
+  "name": "Cyber Security Incident Playbook — Attack Chain",
+  "versions": {
+    "attack": "14",
+    "navigator": "4.9.1",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "Full attack chain: Initial Access → Privilege Escalation → Persistence → Exfiltration. Demonstrated in a lab environment using Windows 11 VM + Kali Linux.",
+  "filters": {
+    "platforms": ["Windows"]
+  },
+  "sorting": 0,
+  "layout": {
+    "layout": "side",
+    "aggregateFunction": "average",
+    "showID": true,
+    "showName": true,
+    "showAggregateScores": false,
+    "countUnscored": false
+  },
+  "hideDisabled": false,
+  "techniques": [
+    {
+      "techniqueID": "T1566.001",
+      "tactic": "initial-access",
+      "color": "#e74c3c",
+      "comment": "Incident #001 — Malicious LNK shortcut delivered via phishing email. Triggers PowerShell download-and-execute chain. Detected by Wazuh rule 100001.",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1053.005",
+      "tactic": "privilege-escalation",
+      "color": "#e67e22",
+      "comment": "Incident #002 — Insecure scheduled task permissions on cleanup.ps1 (C:\\TaskScripts\\). Authenticated Users had FullControl. Payload overwrote script to call back on port 4444. Executed as SYSTEM.",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1546.003",
+      "tactic": "persistence",
+      "color": "#9b59b6",
+      "comment": "Incident #003 — Permanent WMI event subscription using __EventFilter + CommandLineEventConsumer + __FilterToConsumerBinding. Fires every 60 seconds. Survives reboots. Detected via Sysmon Event IDs 19/20/21 and Wazuh.",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1041",
+      "tactic": "exfiltration",
+      "color": "#1abc9c",
+      "comment": "Incident #004 — finance-data.txt exfiltrated via curl.exe to Python uploadserver (port 8000) over HTTP POST. Executed through existing reverse shell. Detected by Wazuh rule 300004.",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1204.002",
+      "tactic": "execution",
+      "color": "#e74c3c",
+      "comment": "Supporting — User clicked malicious LNK shortcut (Incident #001)",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1059.001",
+      "tactic": "execution",
+      "color": "#e74c3c",
+      "comment": "Supporting — PowerShell used across multiple incidents for payload download, reverse shell, and WMI persistence",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": true
+    },
+    {
+      "techniqueID": "T1105",
+      "tactic": "command-and-control",
+      "color": "#3498db",
+      "comment": "Supporting — Payload (8443.exe) downloaded from attacker HTTP server (Incident #001)",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1070.004",
+      "tactic": "defense-evasion",
+      "color": "#95a5a6",
+      "comment": "Supporting — 8443.exe deleted after execution to reduce disk artefacts (Incident #001)",
+      "enabled": true,
+      "metadata": [],
+      "links": [],
+      "showSubtechniques": true
+    }
+  ],
+  "gradient": {
+    "colors": ["#ff6666", "#ffe766", "#8ec843"],
+    "minValue": 0,
+    "maxValue": 100
+  },
+  "legendItems": [],
+  "metadata": [],
+  "links": [],
+  "showTacticRowBackground": true,
+  "tacticRowBackground": "#dddddd",
+  "selectTechniquesAcrossTactics": true,
+  "selectSubtechniquesWithParent": false,
+  "selectVisibleTechniques": false
+}
